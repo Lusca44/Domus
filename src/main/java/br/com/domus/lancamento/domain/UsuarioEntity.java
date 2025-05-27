@@ -1,4 +1,4 @@
-package br.com.domus.lancamento.entity;
+package br.com.domus.lancamento.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
