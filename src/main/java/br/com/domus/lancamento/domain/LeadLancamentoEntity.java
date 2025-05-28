@@ -1,6 +1,7 @@
 package br.com.domus.lancamento.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -45,11 +46,14 @@ public class LeadLancamentoEntity implements Serializable {
 	@Field(name = "detalhes_cliente")
 	private DetalhesClienteLead detalhesCliente;
 
-	@Field(name = "corretor_opcionista_id")
-	private Long corretorOpcionistaId;
+	@Field(name = "usuario_opcionista_id")
+	private String usuarioOpcionistaId;
 
 	@Field(name = "is_lancamento_concluido")
 	private boolean isLancamentoConcluido;
+	
+	@Field(name = "data_cadastro")
+	private LocalDate dataCadastro;
 
 	public LeadLancamentoEntity() {
 	}
@@ -70,6 +74,7 @@ public class LeadLancamentoEntity implements Serializable {
 		this.nomeCliente = leadLancamentoDTO.nomeCliente();
 		this.ddd = leadLancamentoDTO.ddd();
 		this.telefoneCliente = leadLancamentoDTO.telefoneCliente();
+		this.dataCadastro = LocalDate.now();
 	}
 
 }

@@ -29,7 +29,7 @@ public class LeadLancamentoService {
 		return repository.findByNomeLancamento(nomeLancamento);
 	}
 
-	public List<LeadLancamentoEntity> findAllLancamentosPorCorretorOpcionistaId(Long corretorOpcionistaId) {
+	public List<LeadLancamentoEntity> findAllLancamentosPorCorretorOpcionistaId(String corretorOpcionistaId) {
 		return repository.findAllByCorretorOpcionistaId(corretorOpcionistaId);
 	}
 
@@ -43,5 +43,19 @@ public class LeadLancamentoService {
 		DetalhesClienteLead detalhesLead = new DetalhesClienteLead(detalhesClienteDTO);
 		leadLancamento.setDetalhesCliente(detalhesLead);
 		repository.save(leadLancamento);
+	}
+
+	public void insertUsuarioOpcionistaLead(String leadId, String usuarioId) {
+		LeadLancamentoEntity leadLancamento = repository.findById(leadId).orElseThrow();
+		leadLancamento.setUsuarioOpcionistaId(usuarioId);
+		repository.save(leadLancamento);
+	}
+
+	public void deleteUsuarioOpcionistaLead(String usuarioId) {
+		List<LeadLancamentoEntity> leadsLancamentos = findAllLancamentosPorCorretorOpcionistaId(usuarioId);
+
+		leadsLancamentos.stream().filter(lead -> !lead.isLancamentoConcluido())
+				.forEach(lead -> lead.setUsuarioOpcionistaId(null));
+		repository.saveAll(leadsLancamentos);
 	}
 }

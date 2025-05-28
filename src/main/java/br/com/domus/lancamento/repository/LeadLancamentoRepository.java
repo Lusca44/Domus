@@ -13,6 +13,6 @@ public interface LeadLancamentoRepository extends MongoRepository<LeadLancamento
 
 	List<LeadLancamentoEntity> findByNomeLancamento(String nomeLancamento);
 
-	@Query("{'corretorOpcionistaId': { $regex: ?0, $options: 'i' } }")
-	List<LeadLancamentoEntity> findAllByCorretorOpcionistaId(Long corretorOpcionistaId);
+	@Query("{'usuario_opcionista_id': { $regex: ?0, $options: 'i' } }")
+	List<LeadLancamentoEntity> findAllByCorretorOpcionistaId(String corretorOpcionistaId);
 }

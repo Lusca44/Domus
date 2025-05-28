@@ -40,16 +40,23 @@ public class LeadLancamentoResource {
 		return ResponseEntity.ok().body(leadLancamentoService.findAll());
 	}
 
-	@GetMapping(value = "obterLeads/{nomeProjeto}")
+	@GetMapping(value = "/obterLeads/{nomeProjeto}")
 	public ResponseEntity<List<LeadLancamentoEntity>> findAllLeadsPorNomeLancamento(
 			@PathVariable("nomeProjeto") String nomeProjeto) {
 		return ResponseEntity.ok().body(leadLancamentoService.findByNomeLancamento(nomeProjeto));
 	}
 
-	@PutMapping(value = "inserirDetalhes/{idLead}")
+	@PutMapping(value = "/inserirDetalhes/{idLead}")
 	public ResponseEntity<Void> insertDetalhesClienteLead(@PathVariable("idLead") String idLead,
 			@RequestBody DetalhesClienteLeadDTO detalhesLeadDTO) {
 		leadLancamentoService.insertDetalhesClienteLead(idLead, detalhesLeadDTO);
+		return ResponseEntity.ok().build();
+	}
+
+	@PutMapping(value = "/inserirOpcionista/{idLead}/{usuarioId}")
+	public ResponseEntity<Void> insertUsuarioOpcionista(@PathVariable("idLead") String idLead,
+			@PathVariable("usuarioId") String usuarioId) {
+		leadLancamentoService.insertUsuarioOpcionistaLead(idLead, usuarioId);
 		return ResponseEntity.ok().build();
 	}
 }
