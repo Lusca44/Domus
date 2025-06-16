@@ -22,7 +22,7 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// Se o usuário é admin, retorna a role ADMIN
-		if ("S".equals(usuario.getIsAdmin())) {
+		if (usuario.isAdmin()) {
 			return Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		}
 		return Collections.emptyList();
@@ -58,7 +58,7 @@ public class CustomUserDetails implements UserDetails {
 		return usuario.isAtivo();
 	}
 
-	public String getIsAdmin() {
-		return usuario.getIsAdmin();
+	public boolean getIsAdmin() {
+		return usuario.isAdmin();
 	}
 }

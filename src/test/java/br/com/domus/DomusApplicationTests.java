@@ -3,6 +3,7 @@ package br.com.domus;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.ActiveProfiles;
 
 import br.com.domus.aplicacao.config.security.CustomUserDetailsService;
@@ -11,8 +12,11 @@ import br.com.domus.aplicacao.config.security.jwt.JwtTokenProvider;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class DomusApplicationTests {
+class DomusApplicationTests {
 
+    @MockBean
+    private AuthenticationManager authenticationManager;
+    
     @MockBean
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     
@@ -23,7 +27,6 @@ public class DomusApplicationTests {
     private CustomUserDetailsService customUserDetailsService;
 
     @Test
-    public void contextLoads() {
-        // Teste deve passar agora
+    void contextLoads() {
     }
 }

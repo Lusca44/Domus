@@ -45,7 +45,7 @@ public class UsuarioEntity implements Serializable {
 	private String telefone;
 	
 	@Field(name = "is_admin")
-	private String isAdmin;
+	private boolean isAdmin;
 
 	public UsuarioEntity() {
 		super();

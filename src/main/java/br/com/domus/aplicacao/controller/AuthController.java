@@ -1,4 +1,4 @@
-package br.com.domus.aplicacao.auth;
+package br.com.domus.aplicacao.controller;
 
 import java.time.LocalDate;
 
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.domus.aplicacao.config.security.CustomUserDetails;
 import br.com.domus.aplicacao.config.security.jwt.JwtTokenProvider;
 import br.com.domus.aplicacao.domain.UsuarioEntity;
+import br.com.domus.aplicacao.domain.dto.UsuarioResponse;
 import br.com.domus.aplicacao.repository.UsuarioRepository;
 
 @RestController
@@ -36,31 +37,41 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		// Obtém o CustomUserDetails do usuário autenticado
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		String token = tokenProvider.generateToken(userDetails.getUsername(), userDetails.getIsAdmin());
 
-		return ResponseEntity.ok(new AuthResponse(token));
+		UsuarioEntity usuarioEntity = usuarioRepository.findByEmail(loginRequest.getEmail())
+				.orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+		UsuarioResponse usuario = new UsuarioResponse(usuarioEntity.getId(), usuarioEntity.getNome(),
+				usuarioEntity.getEmail(), usuarioEntity.getDataCadastro(), usuarioEntity.isAtivo(),
+				usuarioEntity.getTelefone(), usuarioEntity.isAdmin());
+
+		return ResponseEntity.ok(new LoginResponse(token, usuario));
 	}
 
-	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+	@PostMapping("/cadastroUsuario")
+	public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
 		if (usuarioRepository.existsByEmail(registerRequest.getEmail())) {
 			return ResponseEntity.badRequest().body("Email já está em uso");
+		}
+
+		if (registerRequest.getSenha() == null || registerRequest.getSenha().isEmpty()) {
+			return ResponseEntity.badRequest().body("A senha é obrigatória");
 		}
 
 		UsuarioEntity usuario = new UsuarioEntity();
 		usuario.setNome(registerRequest.getNome());
 		usuario.setEmail(registerRequest.getEmail());
-		usuario.setSenha(passwordEncoder.encode(registerRequest.getPassword()));
+		usuario.setSenha(passwordEncoder.encode(registerRequest.getSenha()));
 		usuario.setTelefone(registerRequest.getTelefone());
-		usuario.setIsAdmin("N"); // Por padrão, não é admin
+		usuario.setAdmin(registerRequest.isAdmin());
 		usuario.setAtivo(true);
 		usuario.setDataCadastro(LocalDate.now());
 
@@ -72,7 +83,7 @@ public class AuthController {
 	// Classes internas para requests e responses
 	public static class LoginRequest {
 		private String email;
-		private String password;
+		private String senha;
 
 		public String getEmail() {
 			return email;
@@ -82,20 +93,21 @@ public class AuthController {
 			this.email = email;
 		}
 
-		public String getPassword() {
-			return password;
+		public String getSenha() {
+			return senha;
 		}
 
-		public void setPassword(String password) {
-			this.password = password;
+		public void setSenha(String senha) {
+			this.senha = senha;
 		}
 	}
 
 	public static class RegisterRequest {
 		private String nome;
 		private String email;
-		private String password;
+		private String senha;
 		private String telefone;
+		private boolean isAdmin;
 
 		public String getNome() {
 			return nome;
@@ -113,12 +125,12 @@ public class AuthController {
 			this.email = email;
 		}
 
-		public String getPassword() {
-			return password;
+		public String getSenha() {
+			return senha;
 		}
 
-		public void setPassword(String password) {
-			this.password = password;
+		public void setSenha(String senha) {
+			this.senha = senha;
 		}
 
 		public String getTelefone() {
@@ -128,17 +140,13 @@ public class AuthController {
 		public void setTelefone(String telefone) {
 			this.telefone = telefone;
 		}
-	}
 
-	public static class AuthResponse {
-		private String token;
-
-		public AuthResponse(String token) {
-			this.token = token;
+		public boolean isAdmin() {
+			return isAdmin;
 		}
 
-		public String getToken() {
-			return token;
+		public void setIsAdmin(boolean isAdmin) {
+			this.isAdmin = isAdmin;
 		}
 	}
 }
