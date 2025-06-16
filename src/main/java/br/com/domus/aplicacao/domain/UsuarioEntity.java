@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import br.com.domus.aplicacao.domain.dto.UsuarioCadastroDTO;
 import lombok.Data;
@@ -44,6 +43,9 @@ public class UsuarioEntity implements Serializable {
 
 	@Field(name = "telefone")
 	private String telefone;
+	
+	@Field(name = "is_admin")
+	private String isAdmin;
 
 	public UsuarioEntity() {
 		super();

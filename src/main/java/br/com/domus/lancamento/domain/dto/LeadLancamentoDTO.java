@@ -11,7 +11,6 @@ import br.com.domus.lancamento.domain.LeadLancamentoEntity;
 public record LeadLancamentoDTO(//
 		String nomeLancamento, //
 		String nomeCliente, //
-		String ddd, //
 		String telefoneCliente) {
 
 }

@@ -1,5 +1,6 @@
 package br.com.domus.aplicacao.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -10,16 +11,12 @@ import org.springframework.stereotype.Service;
 import br.com.domus.aplicacao.domain.UsuarioEntity;
 import br.com.domus.aplicacao.domain.dto.UsuarioCadastroDTO;
 import br.com.domus.aplicacao.repository.UsuarioRepository;
-import br.com.domus.lancamento.service.LeadLancamentoService;
 
 @Service
 public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
-	@Autowired
-	private LeadLancamentoService leadLancamentoService;
 
 	public List<UsuarioEntity> findAll() {
 		return usuarioRepository.findAll();
@@ -38,8 +35,8 @@ public class UsuarioService {
 	public void desativarUsuario(String usuarioId) {
 		UsuarioEntity usuario = this.findById(usuarioId);
 		usuario.setAtivo(false);
+		usuario.setDataDesativacao(LocalDate.now());
 
-		leadLancamentoService.deleteUsuarioOpcionistaLead(usuarioId);
 		usuarioRepository.save(usuario);
 	}
 }

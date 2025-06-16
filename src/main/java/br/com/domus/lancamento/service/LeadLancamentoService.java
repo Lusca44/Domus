@@ -50,12 +50,4 @@ public class LeadLancamentoService {
 		leadLancamento.setUsuarioOpcionistaId(usuarioId);
 		repository.save(leadLancamento);
 	}
-
-	public void deleteUsuarioOpcionistaLead(String usuarioId) {
-		List<LeadLancamentoEntity> leadsLancamentos = findAllLancamentosPorCorretorOpcionistaId(usuarioId);
-
-		leadsLancamentos.stream().filter(lead -> !lead.isLancamentoConcluido())
-				.forEach(lead -> lead.setUsuarioOpcionistaId(null));
-		repository.saveAll(leadsLancamentos);
-	}
 }

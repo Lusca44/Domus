@@ -36,10 +36,6 @@ public class LeadLancamentoEntity implements Serializable {
 	private String nomeCliente;
 
 	@NonNull
-	@Field(name = "ddd")
-	private String ddd;
-
-	@NonNull
 	@Field(name = "telefone_cliente")
 	private String telefoneCliente;
 
@@ -58,13 +54,12 @@ public class LeadLancamentoEntity implements Serializable {
 	public LeadLancamentoEntity() {
 	}
 
-	public LeadLancamentoEntity(String nomeLancamento, String nomeCliente, boolean isLancamentoConcluido, String ddd,
+	public LeadLancamentoEntity(String nomeLancamento, String nomeCliente, boolean isLancamentoConcluido,
 			String telefoneCliente) {
 		super();
 		this.nomeLancamento = nomeLancamento;
 		this.nomeCliente = nomeCliente;
 		this.isLancamentoConcluido = isLancamentoConcluido;
-		this.ddd = ddd;
 		this.telefoneCliente = telefoneCliente;
 	}
 
@@ -72,7 +67,6 @@ public class LeadLancamentoEntity implements Serializable {
 		super();
 		this.nomeLancamento = leadLancamentoDTO.nomeLancamento();
 		this.nomeCliente = leadLancamentoDTO.nomeCliente();
-		this.ddd = leadLancamentoDTO.ddd();
 		this.telefoneCliente = leadLancamentoDTO.telefoneCliente();
 		this.dataCadastro = LocalDate.now();
 	}
