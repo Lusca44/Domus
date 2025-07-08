@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import br.com.domus.lancamento.domain.LeadLancamentoEntity;
 
 @Repository
-public interface LeadLancamentoRepository extends MongoRepository<LeadLancamentoEntity, String> {
+public interface LeadLancamentoRepository extends MongoRepository<LeadLancamentoEntity, String>, LeadLancamentoRepositoryCustom {
 
 	List<LeadLancamentoEntity> findByNomeLancamento(String nomeLancamento);
 

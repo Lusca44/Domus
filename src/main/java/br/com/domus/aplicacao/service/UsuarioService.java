@@ -32,11 +32,16 @@ public class UsuarioService {
 		usuarioRepository.save(usuario);
 	}
 
-	public void desativarUsuario(String usuarioId) {
+	public void desativarAtivarUsuario(String usuarioId) {
 		UsuarioEntity usuario = this.findById(usuarioId);
-		usuario.setAtivo(false);
+		usuario.setAtivo(!usuario.isAtivo());
 		usuario.setDataDesativacao(LocalDate.now());
 
 		usuarioRepository.save(usuario);
+	}
+
+	public void deleteUsuario(String usuarioId) {
+		UsuarioEntity usuario = this.findById(usuarioId);
+		usuarioRepository.delete(usuario);
 	}
 }
