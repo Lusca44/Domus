@@ -15,7 +15,7 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         
         // Permitir localhost:8081 (seu frontend)
-        config.addAllowedOrigin("http://localhost:8081");
+        config.addAllowedOrigin("*");
         
         // Permitir métodos necessários
         config.addAllowedMethod("GET");
