@@ -35,6 +35,9 @@ public class LeadLancamentoEntity implements Serializable {
 	@Field(name = "nome_cliente")
 	private String nomeCliente;
 
+	@Field(name = "email_cliente")
+	private String emailCliente;
+
 	@NonNull
 	@Field(name = "telefone_cliente")
 	private String telefoneCliente;
@@ -47,7 +50,7 @@ public class LeadLancamentoEntity implements Serializable {
 
 	@Field(name = "is_lancamento_concluido")
 	private boolean isLancamentoConcluido;
-	
+
 	@Field(name = "data_cadastro")
 	private LocalDate dataCadastro;
 
@@ -68,6 +71,7 @@ public class LeadLancamentoEntity implements Serializable {
 		this.nomeLancamento = leadLancamentoDTO.nomeLancamento();
 		this.nomeCliente = leadLancamentoDTO.nomeCliente();
 		this.telefoneCliente = leadLancamentoDTO.telefoneCliente();
+		this.emailCliente = leadLancamentoDTO.emailCliente();
 		this.dataCadastro = LocalDate.now();
 	}
 

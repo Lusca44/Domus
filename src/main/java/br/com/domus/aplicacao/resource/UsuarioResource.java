@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.domus.aplicacao.domain.UsuarioEntity;
 import br.com.domus.aplicacao.domain.dto.UsuarioCadastroDTO;
+import br.com.domus.aplicacao.domain.dto.UsuarioEditDTO;
 import br.com.domus.aplicacao.service.UsuarioService;
 
 @RestController
@@ -46,6 +47,12 @@ public class UsuarioResource {
 		return ResponseEntity.ok().build();
 	}
 
+	@PutMapping("/editar/{usuarioId}")
+	public ResponseEntity<Void> editarUsuario(@PathVariable("usuarioId") String usuarioId,
+			@RequestBody UsuarioEditDTO usuarioEditDTO) {
+		usuarioService.editarUsuario(usuarioId, usuarioEditDTO);
+		return ResponseEntity.ok().build();
+	}
 
 	@DeleteMapping("/deleteUsuario/{usuarioId}")
 	public ResponseEntity<Void> deleteUsuario(@PathVariable("usuarioId") String usuarioId) {

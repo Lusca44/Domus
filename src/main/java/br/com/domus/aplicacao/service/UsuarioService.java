@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.domus.aplicacao.domain.UsuarioEntity;
 import br.com.domus.aplicacao.domain.dto.UsuarioCadastroDTO;
+import br.com.domus.aplicacao.domain.dto.UsuarioEditDTO;
 import br.com.domus.aplicacao.repository.UsuarioRepository;
 
 @Service
@@ -36,6 +37,16 @@ public class UsuarioService {
 		UsuarioEntity usuario = this.findById(usuarioId);
 		usuario.setAtivo(!usuario.isAtivo());
 		usuario.setDataDesativacao(LocalDate.now());
+
+		usuarioRepository.save(usuario);
+	}
+
+	public void editarUsuario(String usuarioId, UsuarioEditDTO usuarioEditDTO) {
+		UsuarioEntity usuario = this.findById(usuarioId);
+
+		usuario.setNome(usuarioEditDTO.nome());
+		usuario.setEmail(usuarioEditDTO.email());
+		usuario.setTelefone(usuarioEditDTO.telefone());
 
 		usuarioRepository.save(usuario);
 	}

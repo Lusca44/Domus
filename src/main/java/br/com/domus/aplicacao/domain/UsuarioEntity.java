@@ -43,7 +43,7 @@ public class UsuarioEntity implements Serializable {
 
 	@Field(name = "telefone")
 	private String telefone;
-	
+
 	@Field(name = "is_admin")
 	private boolean isAdmin;
 
@@ -57,6 +57,7 @@ public class UsuarioEntity implements Serializable {
 		this.email = usuarioDTO.email();
 		this.senha = usuarioDTO.senha();
 		this.telefone = usuarioDTO.telefone();
+		this.isAdmin = usuarioDTO.isAdmin().contains("S");
 		this.isAtivo = true;
 		this.dataCadastro = LocalDate.now();
 	}
