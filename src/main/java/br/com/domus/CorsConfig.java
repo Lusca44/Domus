@@ -15,7 +15,8 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         
         // Permitir localhost:8081 (seu frontend)
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("domuns-front-lucas-santos-projects-d53d8b43.vercel.app");
+        config.addAllowedOrigin("domuns-front.vercel.app");
         
         // Permitir métodos necessários
         config.addAllowedMethod("GET");
