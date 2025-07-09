@@ -1,5 +1,7 @@
 package br.com.domus;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,7 +17,10 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         
         // Permitir localhost:8081 (seu frontend)
-        config.addAllowedOrigin("https://domuns-front.vercel.app");
+        config.setAllowedOrigins(Arrays.asList(
+                "https://domuns-front.vercel.app",
+                "https://domuns-front-lucas-santos-projects-d53d8b43.vercel.app"
+            ));
         
         // Permitir métodos necessários
         config.addAllowedMethod("GET");
