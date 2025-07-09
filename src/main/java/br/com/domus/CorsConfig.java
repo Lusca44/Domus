@@ -26,6 +26,7 @@ public class CorsConfig {
         config.addAllowedMethod("OPTIONS"); // Importante para preflight
         
         // Permitir headers necessários
+        config.addAllowedHeader("*");
         config.addAllowedHeader("Authorization");
         config.addAllowedHeader("Content-Type");
         config.addAllowedHeader("Accept");
