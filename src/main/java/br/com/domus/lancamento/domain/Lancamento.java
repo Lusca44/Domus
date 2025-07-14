@@ -20,12 +20,15 @@ public class Lancamento {
 
 	@Field(name = "url_fotos")
 	private List<String> urlsFotos;
-	
+
 	@Field(name = "slogan")
 	private String slogan;
 
 	@Field(name = "regiao_id")
 	private String regiaoId;
+
+	@Field(name = "tipologia_id")
+	private String tipologiaId;
 
 	@Field(name = "endereco")
 	private String endereco;
