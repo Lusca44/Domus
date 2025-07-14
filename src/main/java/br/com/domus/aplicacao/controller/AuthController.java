@@ -1,5 +1,9 @@
 package br.com.domus.aplicacao.controller;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 import java.time.LocalDate;
 
 import org.springframework.http.ResponseEntity;
@@ -9,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -78,6 +83,27 @@ public class AuthController {
 		usuarioRepository.save(usuario);
 
 		return ResponseEntity.ok("Usuário registrado com sucesso");
+	}
+
+	@PutMapping("/alterarSenha")
+	public ResponseEntity<String> editarSenha(@RequestBody EditarSenhaDTO editarSenhaDTO) {
+		return usuarioRepository.findByEmail(editarSenhaDTO.email()).map(
+				usuario -> this.validarSenhaEAtualizar(usuario, editarSenhaDTO.senha(), editarSenhaDTO.senhaNova()))
+				.orElseGet(() -> ResponseEntity.status(NOT_FOUND).body("Usuario não encontrado!"));
+	}
+
+	private ResponseEntity<String> validarSenhaEAtualizar(UsuarioEntity usuario, String senha, String senhaNova) {
+		if (!passwordEncoder.matches(senha ,usuario.getSenha())) {
+			return ResponseEntity.status(UNAUTHORIZED).body("Senha atual incorreta!");
+		} else {
+			if (senha.equalsIgnoreCase(senhaNova)) {
+				return ResponseEntity.status(BAD_REQUEST).body("Senha nova não pode ser igual a senha atual!");
+			}
+
+			usuario.setSenha(passwordEncoder.encode(senhaNova));
+			usuarioRepository.save(usuario);
+			return ResponseEntity.ok("Senha atualizada!");
+		}
 	}
 
 	// Classes internas para requests e responses
