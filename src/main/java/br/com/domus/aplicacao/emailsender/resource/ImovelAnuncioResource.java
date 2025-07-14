@@ -28,7 +28,8 @@ public class ImovelAnuncioResource {
 	@Value("${sendgrid.from.email}")
 	private String fromEmail;
 
-	private final String toEmail = "Feitozaimoveis@yahoo.com";
+	@Value("${sendgrid.to.email}")
+	private String toEmail;
 
 	@PostMapping("/enviar-email")
 	public ResponseEntity<String> enviarImovelAnuncioProEmail(@RequestBody ImovelAnunciosSiteDTO imovelAnuncioSiteDTO) {
