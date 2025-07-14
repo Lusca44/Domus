@@ -25,8 +25,7 @@ public class ImovelAnuncioResource {
 	@Value("${sendgrid.api.key}")
 	private String sendGridApiKey;
 
-	@Value("${sendgrid.from.email}")
-	private String fromEmail;
+	private String fromEmail = "nao-responda@feitozaimoveis.com.br";
 
 	@Value("${sendgrid.to.email}")
 	private String toEmail;
