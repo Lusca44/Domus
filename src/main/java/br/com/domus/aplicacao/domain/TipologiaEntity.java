@@ -7,10 +7,15 @@ import lombok.Data;
 
 @Data
 @Document(value = "tipologia")
-public class TipologiaImovelEntity {
+public class TipologiaEntity {
 
 	@Id
 	private String id;
 
 	private String nome;
+
+	public TipologiaEntity(String nome) {
+		super();
+		this.nome = nome;
+	}
 }
