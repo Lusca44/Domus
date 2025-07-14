@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.domus.aplicacao.domain.RegiaoEntity;
+import br.com.domus.aplicacao.domain.dto.CadastroRegiaoDTO;
 import br.com.domus.aplicacao.service.RegiaoService;
 
 @RestController
@@ -34,8 +35,8 @@ public class RegiaoResource {
 	}
 
 	@PostMapping("/cadastrarRegiao")
-	public ResponseEntity<Void> cadastrarRegiao(@RequestBody String nomeRegiao) {
-		regiaoService.createRegiao(nomeRegiao);
+	public ResponseEntity<Void> cadastrarRegiao(@RequestBody CadastroRegiaoDTO cadastroRegiao) {
+		regiaoService.createRegiao(cadastroRegiao.nomeRegiao());
 		return ResponseEntity.ok().build();
 	}
 

@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Document(value = "lancamento")
-public class Lancamento {
+public class LancamentoEntity {
 
 	@Id
 	private String id;
@@ -28,7 +28,7 @@ public class Lancamento {
 	private String regiaoId;
 
 	@Field(name = "tipologia_id")
-	private String tipologiaId;
+	private List<String> tipologiaId;
 
 	@Field(name = "endereco")
 	private String endereco;

@@ -1,5 +1,7 @@
 package br.com.domus.aplicacao.domain;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -17,10 +19,10 @@ public class ImovelEntity {
 	private String titulo;
 
 	@Field(name = "finalidade_id")
-	private String finalidadeId;
+	private List<String> finalidadeId;
 
 	@Field(name = "tipologia_id")
-	private String tipologiaId;
+	private List<String> tipologiaId;
 
 	@Field(name = "regiao_id")
 	private String regiaoId;

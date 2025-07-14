@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.domus.aplicacao.domain.TipologiaEntity;
+import br.com.domus.aplicacao.domain.dto.CadastroTipologiaDTO;
 import br.com.domus.aplicacao.service.TipologiaService;
 
 @RestController
@@ -32,8 +33,8 @@ public class TipologiaResource {
 	}
 
 	@PostMapping("/criarTipologia")
-	public ResponseEntity<Void> createTipologia(@RequestBody String nomeTipologia) {
-		tipologiaService.createTipologia(nomeTipologia);
+	public ResponseEntity<Void> createTipologia(@RequestBody CadastroTipologiaDTO cadastroTipologia) {
+		tipologiaService.createTipologia(cadastroTipologia.nomeTipologia());
 		return ResponseEntity.ok().build();
 	}
 }
