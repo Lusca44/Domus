@@ -25,4 +25,13 @@ public class TipologiaService {
 	public void createTipologia(String nome) {
 		tipologiaRepository.save(new TipologiaEntity(nome));
 	}
+
+	public void updateTipologia(String idTipologia, String nome) {
+		TipologiaEntity entity = findById(idTipologia);
+		entity.setNome(nome);
+		tipologiaRepository.save(entity);
+	}
+	public void deleteTipologia(String idTipologia) {
+		tipologiaRepository.deleteById(idTipologia);
+	}
 }

@@ -25,4 +25,14 @@ public class FinalidadeService {
 	public void createFinalidade(String nome) {
 		finalidadeRepository.save(new FinalidadeEntity(nome));
 	}
+
+	public void updateFinalidade(String idFinalidade, String nome) {
+		FinalidadeEntity entity = findById(idFinalidade);
+		entity.setNome(nome);
+		finalidadeRepository.save(entity);
+	}
+	
+	public void deleteFinalidade(String idFinalidade) {
+		finalidadeRepository.deleteById(idFinalidade);
+	}
 }

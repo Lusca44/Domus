@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +39,18 @@ public class FinalidadeResource {
 	@PostMapping("/cadastrarFinalidade")
 	public ResponseEntity<Void> cadastrarFinalidade(@RequestBody CadastroFinalidadeDTO cadastroFinalidade) {
 		finalidadeService.createFinalidade(cadastroFinalidade.nomeFinalidade());
+		return ok().build();
+	}
+	
+	@PutMapping("/updateFinalidade/{idFinalidade}")
+	public ResponseEntity<Void> updateFinalidade(@PathVariable("idFinalidade") String idFinalidade, @RequestBody CadastroFinalidadeDTO cadastroFinalidade) {
+		finalidadeService.updateFinalidade(idFinalidade, cadastroFinalidade.nomeFinalidade());
+		return ok().build();
+	}
+
+	@DeleteMapping("/deleteFinalidade/{idFinalidade}")
+	public ResponseEntity<Void> cadastrarFinalidade(@PathVariable("idFinalidade") String idFinalidade) {
+		finalidadeService.deleteFinalidade(idFinalidade);
 		return ok().build();
 	}
 }
