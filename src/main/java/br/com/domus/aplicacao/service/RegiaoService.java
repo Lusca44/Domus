@@ -37,4 +37,10 @@ public class RegiaoService {
 		regiaoRepository.save(entity);
 	}
 
+	public void updateRegiao(String regiaoId, String nomeRegiao) {
+		RegiaoEntity entity = this.findById(regiaoId);
+		entity.setNomeRegiao(nomeRegiao);
+		regiaoRepository.save(entity);
+	}
+
 }

@@ -51,11 +51,11 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-bom</artifactId>
-            <version>5.5.1</version>
-            <type>pom</type>
-        </dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-bom</artifactId>
+			<version>5.5.1</version>
+			<type>pom</type>
+		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-sync</artifactId>
@@ -93,19 +93,34 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.19</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- Java Mail Sender -->
-    	<dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-starter-mail</artifactId>
-    	</dependency>
-    	<dependency>
-    		<groupId>com.sendgrid</groupId>
-    		<artifactId>sendgrid-java</artifactId>
-    		<version>4.9.3</version>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-jpeg</artifactId>
+			<version>3.9.4</version>
 		</dependency>
 	</dependencies>
 

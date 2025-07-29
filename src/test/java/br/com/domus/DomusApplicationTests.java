@@ -12,9 +12,10 @@ import br.com.domus.aplicacao.config.security.jwt.JwtTokenProvider;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@SuppressWarnings("removal")
 class DomusApplicationTests {
 
-    @MockBean
+	@MockBean
     private AuthenticationManager authenticationManager;
     
     @MockBean

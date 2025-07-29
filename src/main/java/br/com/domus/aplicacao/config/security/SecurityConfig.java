@@ -18,12 +18,16 @@ import br.com.domus.aplicacao.config.security.jwt.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
+	private static final String ROLE_ADMIN = "ADMIN";
+	private static final String ROLE_USER = "USER";
+	
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 	public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
 		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
 	}
 
+	@SuppressWarnings("removal")
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf(csrf -> csrf.disable())
@@ -31,8 +35,15 @@ public class SecurityConfig {
 				.authorizeHttpRequests(authz -> //
 				authz.requestMatchers("/api/auth/**").permitAll() //
 						.requestMatchers("/lancamento/**").permitAll() //
-						.requestMatchers("/usuario/**").hasAnyRole("USER", "ADMIN") //
-						.requestMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
+						.requestMatchers("/finalidade/**").permitAll() //
+						.requestMatchers("/imovel/**").permitAll() //
+						.requestMatchers("/regiao/**").permitAll() //
+						.requestMatchers("/tipologia/**").permitAll() //
+						.requestMatchers("/projeto-lancamento/**").permitAll() //
+						.requestMatchers("/uploads/**").permitAll() //
+						.requestMatchers("/imagem/**").hasAnyRole(ROLE_USER, ROLE_ADMIN) //
+						.requestMatchers("/usuario/**").hasAnyRole(ROLE_USER, ROLE_ADMIN) //
+						.requestMatchers("/admin/**").hasRole(ROLE_ADMIN).anyRequest().authenticated())
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();

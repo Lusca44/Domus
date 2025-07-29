@@ -40,6 +40,12 @@ public class RegiaoResource {
 		return ResponseEntity.ok().build();
 	}
 
+	@PutMapping("/updateRegiao/{regiaoId}")
+	public ResponseEntity<Void> updateStatus(@PathVariable("regiaoId") String regiaoId, @RequestBody CadastroRegiaoDTO updateDTO) {
+		regiaoService.updateRegiao(regiaoId, updateDTO.nomeRegiao());
+		return ResponseEntity.ok().build();
+	}
+	
 	@PutMapping("/alterarStatus/{regiaoId}")
 	public ResponseEntity<Void> alterarStatus(@PathVariable("regiaoId") String regiaoId) {
 		regiaoService.alterarStatusDestaqueRegiao(regiaoId);
