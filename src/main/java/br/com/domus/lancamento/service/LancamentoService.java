@@ -81,6 +81,28 @@ public class LancamentoService {
 		lancamentoRepository.deleteById(lancamentoId);
 
 		imageService.deleteImageFiles(urlsIamges);
-	
+	}
+
+	public void deleteImagemLancamento(String lancamentoId, String urlImagem) {
+		LancamentoEntity lancamento = findById(lancamentoId);
+
+		if (lancamento.getUrlFotoBackGround() != null && lancamento.getUrlFotoBackGround().equals(urlImagem)) {
+			lancamento.setUrlFotoBackGround(null);
+		}
+
+		if (lancamento.getUrlsFotos() != null && !lancamento.getUrlsFotos().isEmpty()) {
+			lancamento.getUrlsFotos().removeIf(url -> url.equals(urlImagem));
+		}
+
+		if (lancamento.getCardLancamentoInfo() != null && lancamento.getCardLancamentoInfo().getUrlImagemCard() != null
+				&& lancamento.getCardLancamentoInfo().getUrlImagemCard().equals(urlImagem)) {
+			lancamento.getCardLancamentoInfo().setUrlImagemCard(null);
+		}
+
+		if (lancamento.getUrlFotoBackGround().equals(urlImagem)) {
+			lancamento.setUrlFotoBackGround(null);
+		}
+
+		lancamentoRepository.save(lancamento);
 	}
 }

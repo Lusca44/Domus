@@ -52,6 +52,21 @@ public class ImovelService {
 		imageService.deleteImageFiles(urlsImage);
 	}
 
+	public void deleteUrlImage(String imovelId, String urlImage) {
+		ImovelEntity entity = findById(imovelId);
+
+		if (entity.getUrlFotoCard() != null && entity.getUrlFotoCard().equals(urlImage)) {
+			entity.setUrlFotoCard(null);
+		}
+
+		if (entity.getUrlsFotos() != null || !entity.getUrlsFotos().isEmpty()) {
+			entity.getUrlsFotos().remove(urlImage);
+//			entity.getUrlsFotos().removeIf(url -> url.equals(urlImage));
+		}
+
+		imovelRepository.save(entity);
+	}
+
 	public void updateImovel(String imovelId, CadastroImovelDTO updateDTO) {
 		ImovelEntity imovel = findById(imovelId);
 

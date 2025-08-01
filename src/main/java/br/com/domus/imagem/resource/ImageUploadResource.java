@@ -5,19 +5,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.domus.aplicacao.service.ImovelService;
 import br.com.domus.imagem.service.ImageOptimizationService;
+import br.com.domus.imagem.service.ImageService;
+import br.com.domus.lancamento.service.LancamentoService;
 
 @RestController
 @RequestMapping("/imagem")
@@ -28,6 +34,15 @@ public class ImageUploadResource {
 
 	@Autowired
 	private ImageOptimizationService optimizationService;
+	
+	@Autowired
+	private ImageService imagemService;
+	
+	@Autowired
+	private LancamentoService lancamentoService;
+
+	@Autowired
+	private ImovelService imovelService;
 
 	@PostMapping("/salvarImagem")
 	public ResponseEntity<String> uploadImagem(@RequestParam("file") MultipartFile file) {
@@ -87,5 +102,19 @@ public class ImageUploadResource {
 		} catch (IOException e) {
 			return ResponseEntity.status(500).body("Erro ao salvar arquivos: " + e.getMessage());
 		}
+	}
+
+	@PostMapping("/deletarImagem")
+	public ResponseEntity<Void> deletarImagem(@RequestBody UrlImagemDTO urlImageDTO) {
+		if (urlImageDTO != null && StringUtils.isNotBlank(urlImageDTO.urlImagem())) {
+			imagemService.deleteImageFiles(Arrays.asList(urlImageDTO.urlImagem()));
+
+			if (urlImageDTO.isLancamento()) {
+				lancamentoService.deleteImagemLancamento(urlImageDTO.itemId(), urlImageDTO.urlImagem());
+				return ResponseEntity.ok().build();
+			}
+			imovelService.deleteUrlImage(urlImageDTO.itemId(), urlImageDTO.urlImagem());
+		}
+		return ResponseEntity.ok().build();
 	}
 }
