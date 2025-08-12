@@ -9,16 +9,12 @@ import org.springframework.stereotype.Service;
 import br.com.domus.aplicacao.domain.ImovelEntity;
 import br.com.domus.aplicacao.domain.dto.CadastroImovelDTO;
 import br.com.domus.aplicacao.repository.ImovelRepository;
-import br.com.domus.imagem.service.ImageService;
 
 @Service
 public class ImovelService {
 
 	@Autowired
 	private ImovelRepository imovelRepository;
-
-	@Autowired
-	private ImageService imageService;
 
 	public List<ImovelEntity> findAll() {
 		return imovelRepository.findAll();
@@ -49,22 +45,6 @@ public class ImovelService {
 		}
 		imovelRepository.delete(entity);
 
-		imageService.deleteImageFiles(urlsImage);
-	}
-
-	public void deleteUrlImage(String imovelId, String urlImage) {
-		ImovelEntity entity = findById(imovelId);
-
-		if (entity.getUrlFotoCard() != null && entity.getUrlFotoCard().equals(urlImage)) {
-			entity.setUrlFotoCard(null);
-		}
-
-		if (entity.getUrlsFotos() != null || !entity.getUrlsFotos().isEmpty()) {
-			entity.getUrlsFotos().remove(urlImage);
-//			entity.getUrlsFotos().removeIf(url -> url.equals(urlImage));
-		}
-
-		imovelRepository.save(entity);
 	}
 
 	public void updateImovel(String imovelId, CadastroImovelDTO updateDTO) {

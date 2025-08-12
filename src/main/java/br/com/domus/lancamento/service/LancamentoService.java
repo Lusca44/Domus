@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.domus.imagem.service.ImageService;
 import br.com.domus.lancamento.domain.LancamentoEntity;
 import br.com.domus.lancamento.domain.dto.CadastroLancamentoDTO;
 import br.com.domus.lancamento.repository.LancamentoRepository;
@@ -17,9 +16,6 @@ public class LancamentoService {
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
 	
-	@Autowired
-	ImageService imageService;
-
 	public List<LancamentoEntity> findAll() {
 		return lancamentoRepository.findAll();
 	}
@@ -79,30 +75,5 @@ public class LancamentoService {
 			urlsIamges.add(lancamento.getCardLancamentoInfo().getUrlImagemCard());
 		}
 		lancamentoRepository.deleteById(lancamentoId);
-
-		imageService.deleteImageFiles(urlsIamges);
-	}
-
-	public void deleteImagemLancamento(String lancamentoId, String urlImagem) {
-		LancamentoEntity lancamento = findById(lancamentoId);
-
-		if (lancamento.getUrlFotoBackGround() != null && lancamento.getUrlFotoBackGround().equals(urlImagem)) {
-			lancamento.setUrlFotoBackGround(null);
-		}
-
-		if (lancamento.getUrlsFotos() != null && !lancamento.getUrlsFotos().isEmpty()) {
-			lancamento.getUrlsFotos().removeIf(url -> url.equals(urlImagem));
-		}
-
-		if (lancamento.getCardLancamentoInfo() != null && lancamento.getCardLancamentoInfo().getUrlImagemCard() != null
-				&& lancamento.getCardLancamentoInfo().getUrlImagemCard().equals(urlImagem)) {
-			lancamento.getCardLancamentoInfo().setUrlImagemCard(null);
-		}
-
-		if (lancamento.getUrlFotoBackGround().equals(urlImagem)) {
-			lancamento.setUrlFotoBackGround(null);
-		}
-
-		lancamentoRepository.save(lancamento);
 	}
 }
