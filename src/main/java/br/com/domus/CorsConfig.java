@@ -19,8 +19,10 @@ public class CorsConfig {
         // Permitir localhost:8081 (seu frontend)
         config.setAllowedOrigins(Arrays.asList(
                 "https://domuns-front.vercel.app",
-                "https://domuns-front-lucas-santos-projects-d53d8b43.vercel.app",
-                "http://localhost:8081"
+                "http://localhost:8081",
+                "http://localhost:3000",
+                "http://feitozaimoveis.com.br",
+                "https://feitozaimoveis.com.br"
             ));
         
         // Permitir métodos necessários
