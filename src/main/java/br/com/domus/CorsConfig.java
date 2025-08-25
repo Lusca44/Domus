@@ -22,7 +22,8 @@ public class CorsConfig {
                 "http://localhost:8081",
                 "http://localhost:3000",
                 "http://feitozaimoveis.com.br",
-                "https://feitozaimoveis.com.br"
+                "https://feitozaimoveis.com.br",
+                "https://www.feitozaimoveis.com.br"
             ));
         
         // Permitir métodos necessários
